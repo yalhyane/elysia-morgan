@@ -14,7 +14,7 @@ export const parseTemplate = (template: string) => {
         });
         arr.push({
             type: 'param',
-            value: result[1].trim(),
+            value: (result[1] || '').trim(),
             args: (result[2] || '').trim().split(',')
         });
         position = reg.lastIndex;

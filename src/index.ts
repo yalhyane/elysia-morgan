@@ -4,7 +4,7 @@ import tokenParser from "./tokens";
 import * as bun from "bun";
 import {FileSink} from "bun";
 export {LogFormat} from './template'
-export {tokens as LogTokens} from './tokens.ts';
+export {tokens as LogTokens} from './tokens';
 
 
 type SkipFunc = (ctx: LoggerContext) => boolean

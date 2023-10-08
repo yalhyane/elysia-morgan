@@ -1,7 +1,5 @@
 import {LoggerContext} from "./index";
-import {StatusMap} from "elysia/utils";
 import {Buffer} from "buffer";
-
 
 const TokenParser: Map<string, (ctx: LoggerContext, ...args: string[]) => string|undefined> = new Map()
 
@@ -19,10 +17,7 @@ TokenParser.set('method', (ctx: LoggerContext) => ctx.request.method);
 
 // request response-time
 TokenParser.set('response-time', (ctx: LoggerContext, ...args: string[]) =>  {
-    let digits = 3;
-    if (args.length > 0) {
-        digits = +args[0];
-    }
+    const digits =  +(args[0] || 3);
     if (!ctx.startAt || !ctx.endsAt) {
         // missing request and/or response start time
         return undefined;
@@ -38,10 +33,7 @@ TokenParser.set('response-time', (ctx: LoggerContext, ...args: string[]) =>  {
 
 // total time in milliseconds
 TokenParser.set('total-time',  (ctx: LoggerContext, ...args: string[]) =>  {
-    let digits = 3;
-    if (args.length > 0) {
-        digits = +args[0];
-    }
+    const digits = +(args[0] || 3);
     if (!ctx.startAt || !ctx.endsAt) {
         // missing request and/or response start time
         return undefined;
@@ -60,10 +52,7 @@ TokenParser.set('total-time',  (ctx: LoggerContext, ...args: string[]) =>  {
 
 // current date
 TokenParser.set('date', (ctx: LoggerContext, ...args: string[]) => {
-    let format = 'web';
-    if (args.length > 0) {
-        format = args[0];
-    }
+    let format = args[0] || 'web';
     const date = new Date();
     switch (format) {
         case 'clf':
@@ -83,7 +72,7 @@ TokenParser.set('status', (ctx: LoggerContext) =>  {
 
     // convert status to number
     if (typeof status === 'string') {
-        status = StatusMap[status] as number;
+        return status;
     }
 
     if (ctx.options?.format !== 'dev') {
@@ -121,18 +110,17 @@ TokenParser.set('user-agent', (ctx: LoggerContext) => {
 
 // request header
 TokenParser.set('req', ({request: req}: LoggerContext, ...args: string[]) => {
-    if (args.length > 0) {
-        const header = args[0];
-        return req.headers.get(header) || '';
+    const header = args[0] || '';
+    if (header.length > 0) {
+        return req.headers.get(header) || undefined;
     }
     return undefined;
 });
 
 // response header
 TokenParser.set('res', (ctx: LoggerContext, ...args: string[]) => {
-    if (args.length > 0) {
-        const header = args[0];
-
+    const header = args[0] || '';
+    if (header.length > 0) {
         return ctx.set.headers[header] || undefined;
     }
     return undefined;
@@ -210,7 +198,7 @@ function getClientIP(headers: Headers): string | null | undefined {
     // Check the de-facto standard header
     if (headers.get('x-forwarded-for')) {
         const ipList = headers.get('x-forwarded-for')?.split(',');
-        return ipList ? ipList[0].trim() : null;
+        return ipList ? (ipList[0] || '').trim() : null;
     }
 
     let clientIP: string | null = null;
