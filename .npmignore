@@ -17,6 +17,7 @@ test
 CHANGELOG.md
 .eslintrc.js
 MIGRATION.md
+tsconfig.cjs.json
 tsconfig.esm.json
 
 # IntelliJ based IDEs
