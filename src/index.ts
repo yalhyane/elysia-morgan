@@ -91,7 +91,7 @@ export const logger = (
     }).filter(t => !!t);
 
     return new Elysia({
-        name: 'elysia-log',
+        name: 'elysia-morgan',
         seed: {options}
     })
         // .state('options', options)

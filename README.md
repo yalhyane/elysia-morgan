@@ -37,13 +37,14 @@ const app = new Elysia()
 import { Elysia } from 'elysia'
 import { logger, LogFormat } from '@yalhyane/elysia-morgan'
 
-const accessLogStream = Bun.file("./access.log").stream();
+const accessLogStream = Bun.file('./access.log', {}).writer();
 
 const app = new Elysia()
     .use(logger({
       format: LogFormat.combined,
       immediate: false,
-      stream: accessLogStream
+      stream: accessLogStream,
+      // skip: (ctx) => +(ctx.set.status || 200 ) >= 400
     })  
     .listen(8080)
 ```
