@@ -1,0 +1,38 @@
+{
+  "name": "elysia-morgan",
+  "module": "./src/index.ts",
+  "type": "module",
+  "version": "0.0.1",
+  "author": {
+    "name": "Yacine Alhyane",
+    "url": "https://github.com/yalhyane",
+    "email": "y.alhyane@gmail.com"
+  },
+  "description": "Logging plugin for Elysia web framework",
+  "main": "./src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yalhyane/elysia-morgan"
+  },
+  "keywords": [
+    "logging",
+    "elysia",
+    "elysiajs",
+    "web",
+    "logger",
+    "middleware",
+    "elysia",
+    "middleware",
+    "plugin",
+    "morgan"
+  ],
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "elysia": "^0.7.15"
+  }
+}
