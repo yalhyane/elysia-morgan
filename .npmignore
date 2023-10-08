@@ -19,4 +19,10 @@ CHANGELOG.md
 MIGRATION.md
 tsconfig.esm.json
 
+# IntelliJ based IDEs
+.idea
+
+# Finder (MacOS) folder config
+.DS_Store
+
 
